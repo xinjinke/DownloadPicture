@@ -22,12 +22,10 @@ public class PairTest {
         System.out.println(mm.getFirst());
         System.out.println(mm.getSecond());
 
-       Integer[] ints ={
+       Integer[] ints = {
                1,3,5,10,35,0,-3
        };
         Pair<Integer> ii = ArrayAlg.minMax(ints);
-
-
 
         System.out.println(ii.getFirst());
         System.out.println(ii.getSecond());
