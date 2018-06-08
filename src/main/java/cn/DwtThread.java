@@ -7,17 +7,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -154,7 +151,7 @@ public class DwtThread extends Thread{
                     while (iterator.hasNext()) {
 
 //                        try {
-//                            Thread.currentThread().sleep(200);
+//                            ThreadDemo.currentThread().sleep(200);
 //                        } catch (InterruptedException e) {
 //                            e.printStackTrace();
 //                        }

@@ -52,7 +52,8 @@ public class GetGoodPicByDouban {
     // 最高页数
     public static final int MAX_PAGE = 200;
     // 存储路径
-    public static final String BASE_PATH = "/Users/xinhezhang/zxh/image";
+    public static final String BASE_PATH = "D://thibt";
+            //"/Users/xinhezhang/zxh/image";
 
 
     /**

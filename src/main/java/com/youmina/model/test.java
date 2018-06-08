@@ -14,5 +14,7 @@ public class test {
 //        Logger.getGlobal()
         logger.info("hello");
         System.out.println(props.getProperty("os.name"));
+        Double d = 18.62345;
+        System.out.println(d);
     }
 }

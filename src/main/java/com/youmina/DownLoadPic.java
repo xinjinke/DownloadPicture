@@ -34,12 +34,13 @@ public class DownLoadPic {
 	  
 	  public static final int MAX_PAGE = 250;
 	    // 存储路径  
-	  public static final String BASE_PATH = "/Users/xinhezhang/zxh/doubanImage";
+	  public static final String BASE_PATH = "D://dbImage";
+				//"/Users/xinhezhang/zxh/doubanImage";
 	      
 	
   public void getDoc() throws IOException{
 	  
-	  for (int i = 50; i<=MAX_PAGE; i++) {
+	  for (int i = 20; i<=MAX_PAGE; i++) {
           String page_url = URL +i;  
           // 图片按页面分文件夹  
           String pagePath = BASE_PATH;
