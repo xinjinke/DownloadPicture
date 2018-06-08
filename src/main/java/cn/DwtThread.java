@@ -179,6 +179,15 @@ public class DwtThread extends Thread{
                     }
                 }
             }
+
+            if(i % 6 ==0){
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("已下载6个帖子");
+            }
         }
        logger.info("\n" + "**************本次下载"+Url+"完成" + sdf2.format(new Date()) + "**************************************************\n");
     }
@@ -240,7 +249,17 @@ public class DwtThread extends Thread{
         try {
             doc = Jsoup.connect(url).userAgent(UA).get();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println("被封，休息0.4秒后再试");
+        }
+
+        while(doc == null){
+            try{
+                Thread.sleep(400);
+            }catch (InterruptedException e){
+                System.out.println(e.getMessage());
+            }
+            doc = getDocument(url);
         }
         return doc;
     }
@@ -248,6 +267,7 @@ public class DwtThread extends Thread{
 
     public static int setPageSize(String url) {
         Document doc = getDocument(url);
+
         Elements es = doc.select("div.pages a"); //page a
         int pageSize = 1;
         for (Iterator<Element> i = es.iterator(); i.hasNext();) {
