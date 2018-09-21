@@ -31,7 +31,7 @@ public class GetGoodPicByDouban {
      **********************/
     //从第x页抓起
     public static final String URL =
-            "http://thibt.com/forum.php?mod=forumdisplay&fid=56&filter=&orderby=lastpost&&page=";
+            "http://thzbb.com/forum.php?mod=forumdisplay&fid=56&filter=&orderby=lastpost&&page=";
     //"http://www.mmonly.cc/mmtp/list_9_"+page+".html";
     //"https://www.dbmeinv.com/?pager_offset=";
     //douban.花瓣
@@ -61,7 +61,7 @@ public class GetGoodPicByDouban {
      */
     public static void main(String[] args) {
 
-        for (int i = 1; i <= MAX_PAGE; i = i++) {
+        for (int i = 1; i <= MAX_PAGE; i++) {
             String page_url = URL + i;
             // 图片按页面分文件夹
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
@@ -113,7 +113,7 @@ public class GetGoodPicByDouban {
             Element e = i.next();
             String url = e.attr("href");
             if (!url.contains("http")) {//加上主站地址
-                url = "http://thibt.com/" + url;
+                url = "http://thzbb.com/" + url;
             }
             rtn.add(url);
             System.out.println("图片帖子链接：" + url);
@@ -182,10 +182,11 @@ public class GetGoodPicByDouban {
 
         String[] tmp = imgUrl.split("/");
 
-        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
-        Date date =new Date();
-        String imgName = sdf.format(date)+".jpg";
-                //tmp[tmp.length - 1];
+//        SimpleDateFormat sdf = new SimpleDateFormat("HHmmss");
+//        Date date =new Date();
+        String imgName =
+                //sdf.format(date)+".jpg";
+                tmp[tmp.length - 1];
 
         File dir = new File(postPath);
         if (!dir.exists())

@@ -13,7 +13,7 @@ public class TestThread {
 
         List<Thread> threads = new ArrayList<>();
         Thread thread = null;
-        for(int i = 0;i<3000;i++){
+        for(int i = 0;i<1000;i++){
             thread = new Thread(new ThreadDemo());
             thread.setName("thread_"+i);
             threads.add(thread);

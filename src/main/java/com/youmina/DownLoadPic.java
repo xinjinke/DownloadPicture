@@ -28,10 +28,10 @@ import org.jsoup.select.Elements;
  */
 public class DownLoadPic {
 
-	  public static final String URL = "https://www.dbmeinv.com/?pager_offset=";  
+	  public static final String URL = "https://www.dbmeinv.com/?pager_offset=";
 	  //1.https://www.dbmeinv.com/?pager_offset=
 	  //2.http://www.mmonly.cc/mmtp/list_9_page.html
-	  
+
 	  public static final int MAX_PAGE = 250;
 	    // 存储路径  
 	  public static final String BASE_PATH = "D://dbImage";
@@ -40,7 +40,7 @@ public class DownLoadPic {
 	
   public void getDoc() throws IOException{
 	  
-	  for (int i = 20; i<=MAX_PAGE; i++) {
+	  for (int i = 1; i<=MAX_PAGE; i++) {
           String page_url = URL +i;  
           // 图片按页面分文件夹  
           String pagePath = BASE_PATH;

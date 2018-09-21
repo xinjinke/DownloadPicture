@@ -16,6 +16,10 @@ public class Scanfile {
 
     private static ArrayList<String> scanFiles = new ArrayList<String>();
 
+
+    private static final String DIR = "D:\\dwp";//1.D:\\dwp 2./usr/local/image
+
+
     public static ArrayList<String> scanFilesWithRecursion(String folderPath) throws Exception {
         ArrayList<String> dirctorys = new ArrayList<String>();
         File directory = new File(folderPath);
@@ -46,7 +50,7 @@ public class Scanfile {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("开始时间："+sdf.format(start));
         try {
-            scanFilesWithRecursion("/usr/local/image");
+            scanFilesWithRecursion(DIR);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,7 +59,7 @@ public class Scanfile {
         int page = size / 100;
 
         for(int i = 1;i< page;i++){
-            File file = new File("/var/www/html/pc/picture_"+i+".html");
+            File file = new File("D:\\yy\\picture_"+i+".html");
             StringBuilder sb = new StringBuilder();
             sb.append("<!DOCTYPE html>\n");
             sb.append("<html lang=\"zh-CN\">\n");
@@ -63,7 +67,7 @@ public class Scanfile {
             sb.append("<body>\n");
             for (int j = (i-1)*100;j< 100 * i;j++) {
                 sb.append("<img src=\"" + scanFiles.get(j));
-                sb.append("\">\n");
+                sb.append("\" height=\"400\" width=\"500\">\n");
             }
             if(i-1>0){
                 sb.append("<a href=\"picture_"+ (i-1) +".html\""+ ">上一页</a>\n");
@@ -82,6 +86,7 @@ public class Scanfile {
         }
         Date end = new Date();
         long s = end.getTime()-start.getTime();
+
         System.out.println("结束时间："+sdf.format(start));
         System.out.println("总耗时："+s+"ms");
     }

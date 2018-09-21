@@ -20,8 +20,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;  
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import org.apache.commons.io.IOUtils;  
+import com.alibaba.dubbo.common.threadpool.support.fixed.FixedThreadPool;
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;  
 import org.apache.http.client.HttpClient;  
@@ -60,20 +63,19 @@ public class GetGoodPicBymmonly {
     // 存储路径  
     public static final String BASE_PATH = "D://image";
 //            "/Users/xinhezhang/zxh/images";
-      
-      
-  
-    /** 
+
+    private static final ExecutorService pool = Executors.newCachedThreadPool();
+    /**
      * @Description 主函数 
      */  
     public static void main(String[] args) {  
-  
-    	SimpleDateFormat sdf =new SimpleDateFormat("HHmmss");
-    	int number = 0;
-        for (int i = 20; i<=MAX_PAGE; i=i++) {
+
+
+    	SimpleDateFormat sdf =new SimpleDateFormat("yyyyMMdd");
+        for (int i = 3; i<=MAX_PAGE; i++) {
             String page_url = URL +i+".html";  
             // 图片按页面分文件夹  
-            String pagePath = BASE_PATH+"/"+sdf.format(new Date());
+            String pagePath = BASE_PATH+"/"+sdf.format(new Date()) +"_"+i;
               
             System.out.println("\n" + "**************解析URL(第" + i + "页):" + page_url + "**************\n");  
             String pageResult = getResultByUrl(page_url); 
@@ -95,11 +97,14 @@ public class GetGoodPicBymmonly {
                     } catch (InterruptedException e) {  
                         e.printStackTrace();  
                     }  
-                    System.out.println("解析图片url："+str);  
-                    File imgFile = getStoreFile(str, pagePath,number++);
-                    if (saveImg(str, imgFile))  
-                        System.out.println("存入图片" + imgFile.getName());  
-                }  
+                    System.out.println("解析图片url："+str);
+                    pool.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            getStoreFileAndSave(str, pagePath);
+                        }
+                    });
+                }
             }  
             System.out.println("\n" + "**************解析URL完成(第" + i + "页)**************\n");  
         }  
@@ -186,12 +191,13 @@ public class GetGoodPicBymmonly {
     /** 
      * 从图片url和帖子名，生成图片的存储路径 
      */  
-    public static File getStoreFile(String imgUrl, String postPath,int number) {
+    public static File getStoreFileAndSave(String imgUrl, String postPath) {
   
         String[] tmp = imgUrl.split("/");  
   
-        String imgName = number+".jpg";
-                //tmp[tmp.length - 1];
+        String imgName =
+//                number+".jpg";
+                tmp[tmp.length - 1];
   
         File dir = new File(postPath);  
         if (!dir.exists())  
@@ -203,7 +209,11 @@ public class GetGoodPicBymmonly {
             } catch (IOException e) {  
                 e.printStackTrace();  
             }  
-        }  
+        }
+        if(saveImg(imgUrl,imgFile)){
+            System.out.println("存入图片" + imgFile.getName());
+        }
+
         return imgFile;  
     }  
     /** 
