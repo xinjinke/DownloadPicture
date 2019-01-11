@@ -59,5 +59,24 @@ public class Test {
         }
 
 
+        String s = "商品名称：ZX 夹克外套男加绒加厚秋冬季新款男装衣服青年运动休闲夹克衫男士韩版修身秋天连帽棒球服秋装褂子短上衣 7743灰色 3XL";
+
+                String[] strings = s.split("：");
+
+
+        System.out.println( String.format("/goods%s.json",1));
+
+
+        String url = "https://search.jd.com/Search?keyword=%E8%A1%A3%E6%9C%8D&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&page=1&s=1&click=0";
+
+        int m = 1;
+        for(int i = 1; i< 5 ;i ++) {//i 第几页
+            if(i > 1){
+                url = url.replaceAll("page=" + (m-2), "page=" + m);
+                url = url.replaceAll("s=" + (53 * (i - 2) + 1), "s=" + (53 * (i - 1) + 1));
+            }
+            m += 2;
+            System.out.println(url);
+        }
     }
 }

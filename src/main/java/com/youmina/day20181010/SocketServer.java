@@ -13,6 +13,7 @@ public class SocketServer {
 
     public static void main(String [] args) throws IOException {
         //端口0-65535之间，0-1023系统占用
+
         ServerSocket sercverSocket = new ServerSocket(10086);
 
         java.net.Socket socket = sercverSocket.accept();
@@ -20,6 +21,7 @@ public class SocketServer {
         InputStream is = socket.getInputStream();
 
         InputStreamReader isr = new InputStreamReader(is);
+
 
         BufferedReader br = new BufferedReader(isr);
 
@@ -32,7 +34,7 @@ public class SocketServer {
 
         OutputStream os = socket.getOutputStream();
         PrintWriter pw = new PrintWriter(os);
-        pw.write("wellcome!");
+        pw.write("welcome!");
         pw.flush();
 
         pw.close();

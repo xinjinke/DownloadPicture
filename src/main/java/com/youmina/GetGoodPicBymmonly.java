@@ -59,7 +59,7 @@ public class GetGoodPicBymmonly {
     		//".img_single a[class]";
     		//".photo_wrap a[class]";  
     // 最高页数  
-    public static final int MAX_PAGE = 255;  
+    public static final int MAX_PAGE = 100000;
     // 存储路径  
     public static final String BASE_PATH = "D://image";
 //            "/Users/xinhezhang/zxh/images";
@@ -72,7 +72,7 @@ public class GetGoodPicBymmonly {
 
 
     	SimpleDateFormat sdf =new SimpleDateFormat("yyyyMMdd");
-        for (int i = 3; i<=MAX_PAGE; i++) {
+        for (int i = 1; i<= MAX_PAGE; i++) {
             String page_url = URL +i+".html";  
             // 图片按页面分文件夹  
             String pagePath = BASE_PATH+"/"+sdf.format(new Date()) +"_"+i;
