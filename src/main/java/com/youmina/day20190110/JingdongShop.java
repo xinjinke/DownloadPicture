@@ -96,19 +96,19 @@ public class JingdongShop {
     public static void getGoodsInfo() throws IOException {
 //        String url = "https://search.jd.com/Search?keyword=%E5%9B%B4%E5%B7%BE&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&suggest=6.def.0.V16&wq=weij&page=1&s=1&click=0";
 
-        String url = "https://search.jd.com/Search?keyword=%E8%83%8C%E5%BF%83&enc=utf-8&qrst=1&rt=1&stop=1&vt=2&wq=%E8%83%8C%E5%BF%83&page=1&s=1&click=0";
+        String url = "https://search.jd.com/Search?keyword=%E7%BE%8E%E5%A6%86&enc=utf-8&wq=%E7%BE%8E%E5%A6%86&pvid=530c8ae76403493a81253afc713d1b6f&page=1&s=1";
         int m = 1;
-        for(int i = 1; i<= 100 ;i ++){//i 第几页
+        for(int i = 1; i<= 10 ;i ++){//i 第几页
             if(i > 1){
                 url = url.replaceAll("page=" + (m-2), "page=" + m);
                 url = url.replaceAll("s=" + (53 * (i - 2) + 1), "s=" + (53 * (i - 1) + 1));
             }
             m += 2;
 
-            url = getParseredHtml2(url);
+//            url = getParseredHtml2(url);
 
-            Document doc = Jsoup.parse(url);
-//            Document doc = Jsoup.connect(url).maxBodySize(0).get();
+//            Document doc = Jsoup.parse(url);
+            Document doc = Jsoup.connect(url).maxBodySize(0).get();
 
             Elements ulList = doc.select("ul[class='gl-warp clearfix']");
 
@@ -173,7 +173,8 @@ public class JingdongShop {
                     Goods goods = new Goods();
                     goods.setGallery(gallerys.toArray(new String[gallerys.size()]));
                     goods.setDetail(detail);//TODO
-                    goods.setCategoryId(37L);
+                    goods.setCategoryId(9L);
+                    goods.setBrandId(30L);
                     goods.setName(name);
                     goods.setPicUrl(img);
                     try{
@@ -198,17 +199,6 @@ public class JingdongShop {
                     //系列
                     Elements xiList = docx.select("div[data-type='系列']").select("div.dd > div");
 
-                    for(Element color : colorList){
-                        //颜色名称
-                        String colorName = color.attr("data-value");
-                        //颜色图片
-                        String colorUrl = color.select("a > img").attr("src");
-                        specification = new GoodsSpecification();
-                        specification.setSpecification("顔色");
-                        specification.setValue(colorName);
-                        specification.setPicUrl(colorUrl);
-                        color_specifications.add(specification);
-                    }
 
                     for(Element element : xiList){
                         //名称
@@ -222,6 +212,18 @@ public class JingdongShop {
                         xilie_specifications.add(specification);
                     }
 
+
+                    for(Element color : colorList){
+                        //颜色名称
+                        String colorName = color.attr("data-value");
+                        //颜色图片
+                        String colorUrl = color.select("a > img").attr("src");
+                        specification = new GoodsSpecification();
+                        specification.setSpecification("顔色");
+                        specification.setValue(colorName);
+                        specification.setPicUrl(colorUrl);
+                        color_specifications.add(specification);
+                    }
 
                     for(Object str : size){
                         specification = new GoodsSpecification();
@@ -255,7 +257,7 @@ public class JingdongShop {
                                     System.out.println("价格异常："+price);
                                 }
                                 product.setPrice(p);
-                                product.setUrl("");//比较难获取
+                                product.setUrl(img);//比较难获取
                                 goodsProducts.add(product);
                             }
                         }
@@ -273,7 +275,7 @@ public class JingdongShop {
                                 System.out.println("价格异常："+price);
                             }
                             product.setPrice(p);
-                            product.setUrl("");//比较难获取
+                            product.setUrl(img);//比较难获取
                             goodsProducts.add(product);
                         }
                     }else if(size_specifications.size() == 0){
@@ -291,7 +293,7 @@ public class JingdongShop {
                                 System.out.println("价格异常："+price);
                             }
                             product.setPrice(p);
-                            product.setUrl("");//比较难获取
+                            product.setUrl(img);//比较难获取
                             goodsProducts.add(product);
                         }
                     }
@@ -306,7 +308,7 @@ public class JingdongShop {
                     dataJson.add(allinone);
                 }
             }
-            File file = new File(String.format("/goods/背心/背心%s.json",i));
+            File file = new File(String.format("/goods/美妆/美妆%s.json",i));
             FileHelper.saveData(file,JSONObject.toJSONString(dataJson));
         }
     }
